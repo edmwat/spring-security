@@ -1,0 +1,34 @@
+spring:
+ datasource:
+    url: jdbc:sqlserver://localhost;database=springbootdb
+    username: sa
+    password: acehood21
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+ jpa:
+    show-sql: true
+    hibernate:
+       dialect: org.hibernate.dialect.SQLServer2012Dialect
+       ddl-auto: create-drop
+    properties:
+       hibernate:
+          format_sql: true
+ thymeleaf:  
+  cache: false
+ security:
+  oauth2:
+   client:
+    registration:
+     google:
+      clientId: 13039679201-5b8f73r8s07pcri9fhu5sos060dgrls9.apps.googleusercontent.com
+      clientSecret: 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
+     scope:
+      - email
+      - profile
+
+
+okta:  
+ oauth2:  
+  issuer: https://dev-81312481.okta.com/oauth2/default  
+  clientId: 0oa3w41v2cdpwy6Az5d7
+  clientSecret: Yg-tQVN0OQJaogqe-si36YJoWAwmnsIdqmifpNHf   
+ 

@@ -12,10 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.edmwat.springsecurity.domain.AppUser;
 import com.edmwat.springsecurity.domain.Role;
 import com.edmwat.springsecurity.service.AppUserService;
-
-@SpringBootApplication
+  
+@SpringBootApplication     
 public class SpringSecurityDemoApplication {
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringSecurityDemoApplication.class, args);
 	}
@@ -46,6 +46,4 @@ public class SpringSecurityDemoApplication {
 			service.addRoleToUser("bailies", "ROLE_ADMIN");
 		};
 	}
-	
-
 }

@@ -1,11 +1,7 @@
 package com.edmwat.springsecurity.api;
 
-import static java.util.Arrays.stream;
-
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,7 +43,11 @@ public class AppUserResource {
 	@GetMapping("/users")
 	public ResponseEntity<List<AppUser>> getUsers(){
 		return ResponseEntity.ok().body(appUserService.getUsers());
-	} 
+	}
+	@GetMapping("/user")
+	public ResponseEntity<List<AppUser>> getUser(){
+		return ResponseEntity.ok().body(appUserService.getUsers());
+	}
 	@PostMapping("/user/save")
 	public ResponseEntity<AppUser> saveUser(@RequestBody AppUser user){ 
 		URI uri = URI.create(ServletUriComponentsBuilder
