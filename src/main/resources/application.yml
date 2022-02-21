@@ -19,8 +19,8 @@ spring:
    client:
     registration:
      google:
-      clientId: 13039679201-5b8f73r8s07pcri9fhu5sos060dgrls9.apps.googleusercontent.com
-      clientSecret: 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
+      clientId: clientId
+      clientSecret: clientsecret
      scope:
       - email
       - profile
@@ -29,6 +29,6 @@ spring:
 okta:  
  oauth2:  
   issuer: https://dev-81312481.okta.com/oauth2/default  
-  clientId: 0oa3w41v2cdpwy6Az5d7
-  clientSecret: Yg-tQVN0OQJaogqe-si36YJoWAwmnsIdqmifpNHf   
+  clientId: clientid
+  clientSecret: clientSecret   
  
