@@ -2,6 +2,7 @@ package com.edmwat.springsecurity.api;
 
 import java.io.IOException;
 import java.net.URI;
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +28,10 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import com.edmwat.springsecurity.domain.AccountUser;
 import com.edmwat.springsecurity.domain.AppUser;
 import com.edmwat.springsecurity.domain.Role;
+import com.edmwat.springsecurity.service.AccountUserService;
 import com.edmwat.springsecurity.service.AppUserService;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -39,12 +45,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AppUserResource {
 	private final AppUserService appUserService;
+	private final AccountUserService accUserService;
 	
-	@GetMapping("/users")
-	public ResponseEntity<List<AppUser>> getUsers(){
-		return ResponseEntity.ok().body(appUserService.getUsers());
-	}
 	@GetMapping("/user")
+	public ResponseEntity<List<AccountUser>> getUsers(){
+		return ResponseEntity.ok().body(accUserService.getAccounts());		
+	}
+	@GetMapping("/users")
 	public ResponseEntity<List<AppUser>> getUser(){
 		return ResponseEntity.ok().body(appUserService.getUsers());
 	}

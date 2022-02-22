@@ -1,5 +1,6 @@
 package com.edmwat.springsecurity.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,16 +11,26 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 
+import com.edmwat.springsecurity.repo.AccountUserRepo;
+import com.edmwat.springsecurity.service.AccountUserService;
+import com.edmwat.springsecurity.service.CustomOAuth2UserService;
+import com.edmwat.springsecurity.service.CustomOidcUserService;
+
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Configuration 
 @EnableWebSecurity 
-@RequiredArgsConstructor
+@AllArgsConstructor 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private final UserDetailsService userDetailService;
-	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder; 
+	private final CustomOidcUserService customOidcUserService;
 	
 	
 	@Override
@@ -32,14 +43,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable()
 			.authorizeRequests().antMatchers("/token/refresh").permitAll()
 			.and()
-			.authorizeRequests().antMatchers(HttpMethod.GET, "/api/users/**").hasAnyAuthority("ROLE_ADMIN")
+			.authorizeRequests().antMatchers(HttpMethod.GET, "/api/users/**").hasAnyAuthority("ROLE_MANAGER")
 			.and()
 			.authorizeRequests().antMatchers(HttpMethod.POST, "/api/users/save/**").hasAnyAuthority("ROLE_ADMIN")
 			.and()
 			.authorizeRequests().anyRequest().authenticated()
 			.and()
-	        .oauth2Login();
-
+	        .oauth2Login()
+	        .authorizationEndpoint()
+            .and()
+            .userInfoEndpoint()
+            	.oidcUserService(customOidcUserService)
+            	.userService(new CustomOAuth2UserService());
 	}
 	@Bean
 	@Override
